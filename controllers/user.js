@@ -2,6 +2,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
+const { NODE_ENV, SECRET_KEY, HASH_LENGTH = 10 } = process.env;
+const { DEV_SECRET_KEY, DEV_HASH_LENGTH } = require('../utils/config');
+
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
@@ -9,7 +12,7 @@ const ConflictError = require('../errors/ConflictError');
 
 const { alreadyExistMessage, badRequestMessage, notFoundMessage } = require('../utils/errorMessages');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
+//const { NODE_ENV, JWT_SECRET } = process.env;
 
 const register = (req, res, next) => {
   const { name, email, password } = req.body;
@@ -45,7 +48,7 @@ const login = (req, res, next) => {
   return User
     .findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'super-strong-secret', {
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? SECRET_KEY : DEV_SECRET_KEY, {
         expiresIn: '7d',
       });
       res.send({ token });
@@ -82,9 +85,12 @@ const updateUser = (req, res, next) => {
     .then((user) => res.send({ user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError(badRequestMessage));
+        next(new BadRequestError(badRequestMessage));
+      } else if (err.code === 11000) {
+        next(new ConflictError(alreadyExistMessage));
+      } else {
+        next(err);
       }
-      return next(err);
     });
 };
 

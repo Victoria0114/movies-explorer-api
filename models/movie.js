@@ -63,10 +63,10 @@ const movieSchema = new mongoose.Schema(
       required: true,
     },
 
-    nameEN: [{
+    nameEN: {
       type: String,
       required: true,
-    }],
+    },
   },
   {
     versionKey: false,

@@ -9,6 +9,7 @@ const urlValidationMesssage = 'Неправильный формат ссылк�
 const crashTestMessage = 'Сервер сейчас упадёт';
 const pageNotFoundMessage = 'Страница не найдена';
 const internalServerErrorMessage = 'На сервере произошла ошибка';
+const serverErrorMessage = 'Ошибка сервера';
 
 module.exports = {
   notFoundMessage,
@@ -22,4 +23,5 @@ module.exports = {
   crashTestMessage,
   pageNotFoundMessage,
   internalServerErrorMessage,
+  serverErrorMessage,
 };
