@@ -64,7 +64,7 @@ const deleteMovie = (req, res, next) => {
     .orFail(new NotFoundError(notFoundMessage))
     .then((movie) => {
       if (movie.owner.toString() === req.user._id) {
-        return Movie.deleteOne();
+        return movie.deleteOne();
       }
       throw new ForbiddenError(forbiddenMessage);
     })
