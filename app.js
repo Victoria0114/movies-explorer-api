@@ -8,7 +8,7 @@ const { DEV_DATA_BASE_PATH, DEV_BASE_PATH, DEV_PORT } = require('./utils/config'
 const router = require('./routes/index');
 const error = require('./middlewares/error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-//const { authLimiter } = require('./utils/limiter');
+// const { authLimiter } = require('./utils/limiter');
 
 const {
   NODE_ENV, DATA_BASE_PATH, PORT, BASE_PATH,
@@ -26,7 +26,7 @@ app.use(helmet());
 app.use(express.json());
 app.use(cors());
 app.use(requestLogger);
-//app.use(authLimiter);
+// app.use(authLimiter);
 app.use(router);
 app.use(errorLogger);
 app.use(errors());

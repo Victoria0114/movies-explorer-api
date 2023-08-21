@@ -2,8 +2,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-const { NODE_ENV, SECRET_KEY, HASH_LENGTH = 10 } = process.env;
-const { DEV_SECRET_KEY, DEV_HASH_LENGTH } = require('../utils/config');
+const { NODE_ENV, SECRET_KEY } = process.env;
+const { DEV_SECRET_KEY } = require('../utils/config');
 
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
@@ -12,7 +12,7 @@ const ConflictError = require('../errors/ConflictError');
 
 const { alreadyExistMessage, badRequestMessage, notFoundMessage } = require('../utils/errorMessages');
 
-//const { NODE_ENV, JWT_SECRET } = process.env;
+// const { NODE_ENV, JWT_SECRET } = process.env;
 
 const register = (req, res, next) => {
   const { name, email, password } = req.body;
